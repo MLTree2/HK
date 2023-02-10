@@ -2,7 +2,7 @@
 
 $db_host = "localhost";
 $db_user = "tree";
-$db_password = "qwer1234";
+$db_password = "password";
 $db_name = "tree";
 
 
