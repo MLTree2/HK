@@ -1,33 +1,23 @@
-# 모의해킹의 목적
 
-본 프로젝트의 목적은 웹 애플리케이션의 보안 취약점을 찾고, 개선할 수 있는 방안을 모색하는 것입니다.
+# 파일 구성
 
-이를 위해, 본 프로젝트에서는 일부 취약점을 일부러 만들어서 모의해킹을 수행하였습니다. 
-# 사용한 도구와 기술
-- Burp Suite Community Edition
-- Ubuntu Server 22.04.1 TLS
-- Apache 2.4.52
-- PHP 8.1.2
-# 모의해킹 웹 서버 파일
-## 파일 구성
-
-- board.php
-- changepw.php
-- changepw_do.php
-- connect.php
-- login_check.php
-- login2.php
-- logout.php
-- view.php
-- write.php
-- write_save.php
-
-# 모의 해킹에 사용된 취약점
-## SQL Injection
-- 로그인 환경과 게시판환경에서의 SQL Injection을 이용하여 DB 정보 탈취
-## XSS(Cross-Site Scripting)
-- 게시판에서의 XSS 취약점을 이용한 사용자 쿠키 탈취후 공격자 서버로 전송
-## File Upload
-- 게시판에서의 파일 업로드기능을 이용하여 웹쉘 업로드
-## CSRF(Cross-Site Request Forgery)
-- 게시판의 취약점을 이용하여 비밀번호변경 페이지를 이용하여 사용자의 비밀번호를 변경
+## board.php
+- 게시판을 구현한 php 소스코드
+## changepw.php
+- 비밀번호 변경을 위한 페이지
+## changepw_do.php
+- 입력받은 비밀번호를 실질적으로 변경하는 부분
+## connect.php
+- DB 연결을 위해 include 하는 php
+## login_check.php
+- 입력받은 id 와 pw 를 이용하여 실질적 로그인을 담당하는 부분
+## login2.php
+- 로그인 페이지
+## logout.php
+- 로그아웃 기능을 하는 페이지
+## view.php
+- 게시글을 확인 하는 기능의 페이지
+## write.php
+- 게시글 작성을 위한 페이지로 제목, 내용, 첨부파일 작성을 위한 페이지
+## write_save.php
+- DB에 작성한 글을 
