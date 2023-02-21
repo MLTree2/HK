@@ -1,3 +1,7 @@
+# 웹 서버 생성
+- 전체적인 웹 서버 생성은 [__해당 Blog__](https://blog.lael.be/post/11072)를 참조하여 생성하였습니다.
+- 취약점 생성을 위하여 아파치 설정 파일(/etc/apache2/apache2.conf)중 ***Options Indexes FollowSymLinks*** 를 추가하였습니다.
+
 # 파일 구성
 
 ## board.php
