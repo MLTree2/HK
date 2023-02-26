@@ -4,32 +4,32 @@
 
 # 파일 구성
 
-## [board.php](#board.php)
+## [board.php](https://github.com/Tree1st/HK/blob/master/webH/0.%20%EC%9B%B9%EC%84%9C%EB%B2%84%20%EC%83%9D%EC%84%B1/board.php)
 - 게시판을 구현한 php 소스코드입니다.
 
-## changepw.php
+## [changepw.php](https://github.com/Tree1st/HK/blob/master/webH/0.%20%EC%9B%B9%EC%84%9C%EB%B2%84%20%EC%83%9D%EC%84%B1/changepw.php)
 - 비밀번호 변경을 위한 페이지입니다.
 
-## changepw_do.php
+## [changepw_do.php](https://github.com/Tree1st/HK/blob/master/webH/0.%20%EC%9B%B9%EC%84%9C%EB%B2%84%20%EC%83%9D%EC%84%B1/changepw_do.php)
 - 입력받은 비밀번호를 실질적으로 변경하는 부분입니다.
 
-## connect.php
+## [connect.php](https://github.com/Tree1st/HK/blob/master/webH/0.%20%EC%9B%B9%EC%84%9C%EB%B2%84%20%EC%83%9D%EC%84%B1/connect.php)
 - DB 연결을 위해 include하는 php입니다.
 
-## login_check.php
+## [login_check.php](https://github.com/Tree1st/HK/blob/master/webH/0.%20%EC%9B%B9%EC%84%9C%EB%B2%84%20%EC%83%9D%EC%84%B1/login_check.php)
 - 입력받은 id와 pw를 이용하여 실질적으로 로그인을 처리하는 부분입니다.
 
-## login2.php
+## [login2.php](https://github.com/Tree1st/HK/blob/master/webH/0.%20%EC%9B%B9%EC%84%9C%EB%B2%84%20%EC%83%9D%EC%84%B1/login2.php)
 - 로그인 페이지입니다.
 
-## logout.php
+## [logout.php](https://github.com/Tree1st/HK/blob/master/webH/0.%20%EC%9B%B9%EC%84%9C%EB%B2%84%20%EC%83%9D%EC%84%B1/logout.php)
 - 로그아웃 기능을 수행하는 페이지입니다.
 
-## view.php
+## [view.php](https://github.com/Tree1st/HK/blob/master/webH/0.%20%EC%9B%B9%EC%84%9C%EB%B2%84%20%EC%83%9D%EC%84%B1/view.php)
 - 게시글을 확인하는 기능을 수행하는 페이지입니다.
 
-## write.php
+## [write.php](https://github.com/Tree1st/HK/blob/master/webH/0.%20%EC%9B%B9%EC%84%9C%EB%B2%84%20%EC%83%9D%EC%84%B1/write.php)
 - 게시글 작성을 위한 페이지입니다. 제목, 내용, 첨부파일 작성을 위한 기능을 제공합니다.
 
-## write_save.php
+## [write_save.php](https://github.com/Tree1st/HK/blob/master/webH/0.%20%EC%9B%B9%EC%84%9C%EB%B2%84%20%EC%83%9D%EC%84%B1/write_save.php)
 - DB에 작성한 글을 저장하는 부분입니다. write.php에서 작성한 게시글 내용을 DB에 저장합니다.
