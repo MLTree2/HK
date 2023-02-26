@@ -20,12 +20,12 @@
 오류가 발생하여 SQL_Injection에 취약점이 있는것으로 짐작할 수 있습니다.
 
 다음은 위의 로그인 폼에서 사용되는 취약한 로그인 쿼리입니다.
-```
-$query = "select * from users where id='$id' and pw='$pw'";
+``` html
+$query = "SELECT * FROM users WHERE id='$id' AND pw='$pw'";
 ```
 다음과 같이 id 입력란에 **'or 1=1 #** 을 입력하면 쿼리에는 
-```
-$query = "select * from users where id=''or 1=1 #' and pw='$pw'";
+```sql
+SELECT * FROM users WHERE id=''or 1=1 #' AND pw='$pw'
 ```
 위와같이 입력되게 되며 쿼리의 조건문이 항상 참이되어 모든 사용자의 정보를 가져올 수 있게되며, 후속 조건문에 의하여 결과값의 가장 첫번째 값인 admin으로 로그인 할 수 있습니다.
 
