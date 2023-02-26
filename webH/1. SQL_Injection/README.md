@@ -33,6 +33,15 @@ SELECT * FROM users WHERE id=''or 1=1 #' AND pw='$pw'
 
 ### Blind_SQL_Injection 공격
 
+Blind_SQL_Injection 이란 일반적인 SQL_Injection과 비슷하게 취약점을 이용하지만, 시간에 따른 응답 결과, 참과 거짓에 따른 응답 결과 등을 분석하여 정보를 얻는 방식입니다.
+
+로그인화면에서의 ID 입력란에 `' or 1=1 and length(database())=1#`을 입력해 보면 다음과같은 오류가 뜹니다.
+
+[blind 오류 1]
+
+이 때 숫자를 증가시켜가며 입력해보면 ![image](https://user-images.githubusercontent.com/66786006/221412637-947a9e49-4175-4c91-891d-9b0d6b6942b8.png)
+
+
 ## 게시판 화면
 
 [게시판 화면 사진]
