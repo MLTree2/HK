@@ -4,7 +4,7 @@
 
 # 파일 구성
 
-## board.php
+## [board.php](#board.php)
 - 게시판을 구현한 php 소스코드입니다.
 
 ## changepw.php
