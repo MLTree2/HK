@@ -1,9 +1,9 @@
 <?php
 
 $db_host = "localhost";
-$db_user = "tree";
-$db_password = "password";
-$db_name = "tree";
+$db_user = "";
+$db_password = "";
+$db_name = "";
 
 
 $con = new mysqli($db_host, $db_user, $db_password, $db_name); // 데이터베이스 접속
