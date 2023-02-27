@@ -41,17 +41,17 @@ Blind_SQL_Injection 이란 일반적인 SQL_Injection과 비슷하게 취약점�
 
 로그인화면에서의 ID 입력란에 `' or 1=1 and length(database())=1#`을 입력해 보면 다음과같은 오류가 뜹니다.
 
-[blind 오류 1]
+![blind 오류 1](https://github.com/Tree1st/HK/blob/master/webH/image/SQL_Injection/blind_error.png)
 
 이 때 숫자를 증가시켜가며 입력해보면  `' or 1=1 and length(database())=4#` 에서 로그인에 성공하여 데이터베이스 이름의 길이가 4글자임을 알 수 있습니다.
 
 이러한 작업을 간편하게 하기위해 Burp Suite 의 Intruder 기능을 이용할 수 있습니다.
 
-[burp payload] , [payload setting]
+![burp payload](https://github.com/Tree1st/HK/blob/master/webH/image/SQL_Injection/burp_payload.png)![payload setting](https://github.com/Tree1st/HK/blob/master/webH/image/SQL_Injection/payload%20setting.png)
 
 위와같이 증가시켜줄 부분을 정한 후 다음과 같이 1~10까지의 숫자를 넣는 설정을 한 후 결과 값을 보면 
 
-![image](https://user-images.githubusercontent.com/66786006/221413659-ae57300b-7280-41df-bbe2-ee799cca3dc5.png)
+![image](https://github.com/Tree1st/HK/blob/master/webH/image/SQL_Injection/burp_result.png)
 
 Payload 4 에서 Length가 다른 하나를 확인 할 수 있습니다.
 
@@ -74,7 +74,7 @@ def fun_2(len_db):
  ```
  위 코드에서는 요청에대한 결과에서 `invalid` 단어가 없으면 결과에 글자가 추가되는 방식으로 만들었습니다. 이를 실행시켜보면 
  
- [py db 이름]
+ ![py db 이름](https://github.com/Tree1st/HK/blob/master/webH/image/SQL_Injection/fun2.png)
 
 다음과같이 DB이름이 tree 임을 알아낼 수 있습니다.
 
@@ -103,7 +103,7 @@ def fun_4(dbname):
 ```
 각 테이블의 길이와 개수를 알기 위해서는 다음과같은 코드를 사용하였습니다. 1번과 유사한방법으로 테이블의 이름의 길이를찾고, 50글자가 넘는다면 없다고 생각하여 개수를 추측합니다.
 
-[fun4 결과]
+![fun4 결과](https://github.com/Tree1st/HK/blob/master/webH/image/SQL_Injection/fun4.png)
 
 결과로는 5글자, 5글자로 총 2개의 결과가 나왔습니다. 
 
@@ -130,7 +130,7 @@ def fun_5(dbname,table_len):
  ```
  2번과 유사한 방식으로 각 테이블의 이름을 찾을 수 있습니다. 입력값의 table_len 값은 3번의 출력과 동일한 [5, 5]로 입력합니다.
  
- [fun 5]
+ ![fun 5](https://github.com/Tree1st/HK/blob/master/webH/image/SQL_Injection/fun5.png)
  
  테이블의 이름은 각각 board, usesrs 임을 알 수 있습니다.
  
@@ -157,7 +157,7 @@ def fun_5(dbname,table_len):
  ```
 해당 반복문을 돌며 각 테이블별 컬럼 이름의 길이를 찾을 수 있습니다. 이때 MAX_LENGTH 를 임의로 정하여 MAX_LENGTH 에 도달하여도 길이를 찾을 수 없으면 더이상 컬럼이 존재하지 않는 형식으로 만들어져 있습니다. 
 
-[fun 6]
+![fun 6](https://github.com/Tree1st/HK/blob/master/webH/image/SQL_Injection/fun6.png)
 
 결과는 위 사진과 같이 입력을 ['board','usesrs']을 넣었을 때 각각의 컬럼의 길이가 [4, 7, 7, 4, 3, 4], [4, 19, 17, 29, 24, 2, 2]으로 나오는 것을 확인 할 수 있습니다.
 
@@ -184,7 +184,7 @@ def fun_7(table_name,col_len):
 ```
 컬럼의 이름을 찾는것은 테이블의 이름을 찾는 형식과 유사합니다. 다음은 입력을 `fun_7('users',[4, 19, 17, 29, 24, 2, 2])`으로 했을 때의 결과입니다.
 
-[fun 7]
+![fun 7](https://github.com/Tree1st/HK/blob/master/webH/image/SQL_Injection/fun7.png)
 
 위에서 찾은 컬럼의 길이와 일치하는 것을 볼 수 있습니다.
 
@@ -224,13 +224,13 @@ def fun_8(table_name, col_names):
 ```
 마지막으로는 실제로 컬럼안의 정보를 얻는 작업입니다. 예시로 `users` 테이블의 `id` ,`pw` 컬럼의 정보를 얻기위하여 입력값을 `fun_8('users',['id','pw'])`으로 설정하였습니다.
 
-[fun 8]
+![fun 8](https://github.com/Tree1st/HK/blob/master/webH/image/SQL_Injection/fun8.png)
 
 로그인 form에서 Blind_SQL_Injection을 이용하여 id 값과 pw 값을 얻는데 성공하였습니다.
 
 ## 게시판 화면
 
-[게시판 화면 사진]
+![게시판 화면 사진](https://github.com/Tree1st/HK/blob/master/webH/image/SQL_Injection/board'.png)
 
 위 웹페이지에서는 게시판 기능을 제공하며, 게시글 검색기능을 제공하고 글쓰기를 통하여 첨부파일 포함한 글을 올릴수 있습니다.
 
@@ -246,25 +246,25 @@ $query = "select * from board where subject LIKE '%$search%'";
 
 검색란에 `' UNION SELECT ALL 1,2,3,... # ` 을 입력하여 숫자를 증가시켜 가며 입력하여 컬럼의 개수를 찾습니다.
 
-[컬럼개수 찾기 사진]
+![컬럼개수 찾기 사진](https://github.com/Tree1st/HK/blob/master/webH/image/SQL_Injection/board_num.png)
 
 **2. 테이블 이름 찾기**
 
 검색란에 `' UNION SELECT ALL 1,table_name,3,4,5,6 FROM information_schema.tables WHERE table_schema=database()#` 을 입력하여 테이블의 이름을 찾습니다.
 
-[테이블 이름찾기 사진]
+![테이블 이름찾기 사진](https://github.com/Tree1st/HK/blob/master/webH/image/SQL_Injection/board_table.png)
 
 **3. 원하는 테이블의 컬럼 이름 찾기**
 
 검색란에 2번에서 얻은 테이블 이름을 이용하여 
 `' UNION SELECT ALL 1,column_name,3,4,5,6 FROM information_schema.columns where table_name='테이블 이름'#` 을 입력하여 컬럼의 이름을 찾습니다.
 
-[테이블 컬럼 이름찾기 사진]
+![테이블 컬럼 이름찾기 사진](https://github.com/Tree1st/HK/blob/master/webH/image/SQL_Injection/board_col_name.png)
 
 
 **4. 해당 컬럼 데이터 얻기**
 
 3번에서 얻은 컬럼의 이름을 바탕으로 각 데이터를 얻을 수 있습니다. `' UNION SELECT ALL 1,id,3,pw,5,6 FROM users#`
 
-[데이터 얻은 사진]
+![데이터 얻은 사진](https://github.com/Tree1st/HK/blob/master/webH/image/SQL_Injection/board_id,pw.png)
 
