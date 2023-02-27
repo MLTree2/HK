@@ -5,7 +5,7 @@
 
 ## 로그인 화면
 
-[로그인화면 사진]
+![로그인화면 사진](https://github.com/Tree1st/HK/blob/master/webH/image/SQL_Injection/login.png)
 
 
 위 웹페이지에서는 로그인 기능을 제공하며, 아이디와 비밀번호를 입력한 뒤 로그인 버튼을 누르면 해당 정보를 토대로 데이터베이스에서  
@@ -15,7 +15,8 @@
 ### 기본 SQL_Injection 공격
 다음과 같이 id 입력란에 **'** 를 입력하여 SQL_Injection 공격에 취약한지 확인합니다.
 
-[취약확인 사진 ,  오류발생 사진]
+![취약확인 사진](https://github.com/Tree1st/HK/blob/master/webH/image/SQL_Injection/login'.png)
+![500](https://github.com/Tree1st/HK/blob/master/webH/image/SQL_Injection/500err.png)
 
 오류가 발생하여 SQL_Injection에 취약점이 있는것으로 짐작할 수 있습니다.
 
@@ -29,7 +30,8 @@ SELECT * FROM users WHERE id=''or 1=1 #' AND pw='$pw'
 ```
 위와같이 입력되게 되며 쿼리의 조건문이 항상 참이되어 모든 사용자의 정보를 가져올 수 있게되며, 후속 조건문에 의하여 결과값의 가장 첫번째 값인 admin으로 로그인 할 수 있습니다.
 
-[인젝션 사진, 로그인성공 사진]
+![인젝션 사진](https://github.com/Tree1st/HK/blob/master/webH/image/SQL_Injection/login1=1.png)
+![로그인성공 사진](https://github.com/Tree1st/HK/blob/master/webH/image/SQL_Injection/admin_login.png)
 
 ### Blind_SQL_Injection 공격
 
