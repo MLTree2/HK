@@ -16,15 +16,15 @@ CSRF(Cross-Site Request Forgery) 공격은 인증된 사용자의 권한을 사�
 
 **1. 사용자의 원래 비밀번호**
 
-![csrf_userpw]
+![csrf_userpw](https://github.com/Tree1st/HK/blob/master/webH/image/csrf/csrf_userpw.png)
 
 **2. 사용자가 CSRF 공격이포함된 게시글 클릭**
 
-![csrf_click]
+![csrf_click](https://github.com/Tree1st/HK/blob/master/webH/image/csrf/csrf_click.png)
 
 **3. 사용자의 비밀번호가 변경됨**
 
-![csrf_changedpw]
+![csrf_changedpw](https://github.com/Tree1st/HK/blob/master/webH/image/csrf/csrf_changedpw.png)
 
 ## 대응 방안
 - CSRF 토큰 사용: 서버 측에서 발급한 CSRF 토큰을 포함하여 요청을 보내도록 클라이언트에게 요청합니다. 이 토큰은 세션에 저장되어 있는 정보를 이용하여 생성됩니다. 공격자가 이 토큰을 알지 못하면 CSRF 공격을 수행할 수 없습니다.
