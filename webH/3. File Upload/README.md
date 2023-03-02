@@ -3,7 +3,7 @@
 
 ## 공격 실습
 
-![file_upload]
+![file_upload](https://github.com/Tree1st/HK/blob/master/webH/image/fileUpload/file_upload.png)
 
 공격에 사용될 웹쉘 파일을 업로드 합니다. 웹쉘(Web Shell)은 웹을 통해 원격에서 서버에 접근하여 명령어를 실행할 수 있는 프로그램입니다. 웹쉘은 서버의 취약점으로부터 공격자가 접근한 후, 웹상에서 명령어를 실행하고 서버를 제어할 수 있습니다.
 
@@ -32,8 +32,9 @@ if(isset($_GET['cmd'])){
 
 업로드된 파일의 다운로드 주소를 살펴보면 `http://192.168.219.180/upfiledata/webshell.php` 이와같이 설정되어있음을 알 수 있습니다.    
 이 주소로 이동하면 다음과같이 명령어를 실행시킬 수 있는 웹쉘이 실행됨을 볼 수 있습니다.
+<br><br>
 
-![file_upload_webshell]
+![file_upload_webshell](https://github.com/Tree1st/HK/blob/master/webH/image/fileUpload/file_upload_webshell.png)
 
 위와같이 입력란에 `cat ../../../../../etc/passwd` 를 입력하여 passwd 파일을 탈취할 수 있습니다.
 
