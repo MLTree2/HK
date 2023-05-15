@@ -3,7 +3,7 @@
 이 예시는 SQL_Injection 공격에 대한 모의해킹을 실습해보는 예시이며, 로그인과 게시판 형태의 form에서 여러가지 기법을 이용하여 SQL_Injection을 수행합니다.
 
 
-## 로그인 화면
+## 로그인 페이지
 
 ![로그인화면 사진](https://github.com/Tree1st/HK/blob/master/webH/image/SQL_Injection/login.png)
 
@@ -228,7 +228,7 @@ def fun_8(table_name, col_names):
 
 로그인 form에서 Blind_SQL_Injection을 이용하여 id 값과 pw 값을 얻는데 성공하였습니다.
 
-## 게시판 화면
+## 게시판 페이지
 
 ![게시판 화면 사진](https://github.com/Tree1st/HK/blob/master/webH/image/SQL_Injection/board'.png)
 
