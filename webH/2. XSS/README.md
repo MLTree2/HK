@@ -38,15 +38,15 @@
 
 ## 방어 실습
  ### 쿠키 탈취 방어
- ![php.ini]()
+ ![php.ini](https://github.com/MLTree2/HK/blob/master/webH/image/xss/httponlyphpini.png)
  
  php.ini 파일의 `session.cookie_httponly = true' 설정을 통하여 쿠키의 속성에 HttpOnly 가 설정된다. HttpOnly 속성이 추가된 쿠키는 자바스크립트등과 같은 언어로 쿠키에 접근하는것을 차단하여 쿠키를 탈취하는것을 불가능하게 합니다.
  
- ![editcookie]()
+ ![editcookie](https://github.com/MLTree2/HK/blob/master/webH/image/xss/httponly_editcookie.png)
  
  EditThisCookie 툴로 쿠키를 보면 HTTP 전용 란에 체크가 된것을 볼 수 있습니다.
  
- ![httponly_test]()
+ ![httponly_test](https://github.com/MLTree2/HK/blob/master/webH/image/xss/httponly_XSS_test.png)
  
  또한 기존의 XSS_Test 게시글에 접속하여도 쿠키가 뜨지 않는것을 확인할 수 있습니다.
  
@@ -75,4 +75,7 @@ $content = htmlspecialchars($rs->content);
 </p>
 ...
 ```
+![escape_result](https://github.com/MLTree2/HK/blob/master/webH/image/xss/escape_result.png)
+
+게시글에 XSS를 시도한 HTML 코드가 그대로 적혀있으며 HTML로 확인 시 **`<. >`** 문자열이 **`&lt; , &gt;`** 로 치환된것을 확인할 수 있습니다.
 
