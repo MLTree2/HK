@@ -38,9 +38,14 @@ if(isset($_GET['cmd'])){
 
 위와같이 입력란에 `cat ../../../../../etc/passwd` 를 입력하여 passwd 파일을 탈취할 수 있습니다.
 
-## 방어 방법
-- 파일 확장자 제한 : 업로드 가능한 파일 확장자를 제한함으로써, 일반적인 파일 형식이 아닌 파일은 업로드가 불가능하도록 할 수 있습니다.
-- 파일 크기 제한 : 업로드 가능한 파일의 최대 크기를 제한함으로써, 대용량 파일의 업로드를 방지할 수 있습니다.
-- 파일 유형 검사 : 업로드된 파일을 검사하여, 악성 코드를 포함하고 있는지 여부를 판단하여 업로드를 차단하도록 할 수 있습니다.
-- 파일 이름 변경 : 업로드된 파일의 이름을 무작위로 변경하여, 악성 코드가 실행되지 않도록 할 수 있습니다.
+## 방어 실습
 
+![fileupload_apacheconf](https://github.com/MLTree2/HK/blob/master/webH/image/fileUpload/file_upload_apache2conf.png)
+
+Apache 설정파일인 apache2.conf 파일에서 파일이 업로드되는 경로의 Directory 설정에 `FilesMatch "\.*$"` 를 이용하여 모든 파일에 대하여 `SetHandler None`을 설정합니다. <br>
+`SetHandler None`을 설정하면 웹 서버는 어떤 핸들러도 사용하지 않습니다. 이는 일반적으로 정적인 파일을 서비스하는 데 사용됩니다. <br>
+즉, 요청된 파일을 그대로 반환하거나, 디렉토리 목록을 표시하지 않고 요청된 파일을 클라이언트에게 제공하여 파일이 웹서버에서 실행되지 않도록 합니다. 
+
+![fileupload_a_result](https://github.com/MLTree2/HK/blob/master/webH/image/fileUpload/file_upload_a_result.png)
+
+`SetHandler None`설정을 적용한 후 기존의 FileUpload 공격을 수행하면 다음과같이 웹쉘 파일이 실행되지 않고 그대로 내용이 나오는것을 확인 할 수 있습니다. 
