@@ -30,3 +30,8 @@ CSRF(Cross-Site Request Forgery) 공격은 인증된 사용자의 권한을 사�
 - CSRF 토큰 사용: 서버 측에서 발급한 CSRF 토큰을 포함하여 요청을 보내도록 클라이언트에게 요청합니다. 이 토큰은 세션에 저장되어 있는 정보를 이용하여 생성됩니다. 공격자가 이 토큰을 알지 못하면 CSRF 공격을 수행할 수 없습니다.
 
 - XSS 공격 방지: CSRF 공격은 기본적으로 XSS 공격에 기반한 공격이기 때문에 XSS 공격을 방어하면 CSRF 공격을 방어 할 수 있습니다.
+
+## 방어 실습
+![csrf_b](https://github.com/MLTree2/HK/blob/master/webH/image/csrf/csrf_B.png)
+
+XSS 방어에서 사용된 [HTML Escaping](https://github.com/MLTree2/HK/tree/master/webH/2.%20XSS#html-%EC%9D%B4%EC%8A%A4%EC%BC%80%EC%9D%B4%ED%94%84)을 통하여 CSRF공격도 방어함을 볼 수 있다.
