@@ -17,9 +17,6 @@ $row = mysqli_fetch_array($result);
 
 
 
-if(!$result){
-   echo("Error : ".mysqli_error($con));
-}
 
 
 
