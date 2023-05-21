@@ -279,5 +279,67 @@ Prepared Statements를 사용하여 입력값을 자동으로 이스케이프하
 사용자 입력값에 포함된 특수 문자를 이스케이프하여 쿼리 실행에 영향을 주지 않도록 처리합니다. 예를 들어, PHP에서는 mysqli_real_escape_string 함수를 사용할 수 있습니다.
 
 - 최소 권한 원칙:
-웹 애플리케이션에서 데이터베이스에 접근하는 계정은 최소한의 권한만을 부여하는 것이 좋습니다. 읽기, 쓰기, 수정, 삭제 등의 작업에 필요한 권한만을 가지고 있도록 계정을 구성하여, 악의적인 사용자가 데이터베이스를 악용하는 것을 방지할 수 있습니다.
+웹 애플리케이션에서 데이터베이스에 접근하는 계정은 최소한의 권한만을 부여합니다. 읽기, 쓰기, 수정, 삭제 등의 작업에 필요한 권한만을 가지고 있도록 계정을 구성하여, 악의적인 사용자가 데이터베이스를 악용하는 것을 방지합니다.
 
+
+## 방어 실습
+
+### 입력값의 이스케이프
+<br>
+기존 logincheck.php 에서 id 와 pw 에 mysqli_real_escape_string 함수를 추가합니다.
+
+```php
+<?php
+
+... 중략 ...
+
+$id = $_POST['id']; // 아이디
+$id = mysqli_real_escape_string($con, $id); 
+$pw = $_POST['pw']; // 패스워드
+$pw = mysqli_real_escape_string($con, $pw); 
+  
+$query = "select * from users where id='$id' and pw='$pw'";
+
+... 중략 ...
+?>
+```
+
+mysqli_real_escape_string 함수는 주어진 문자열에서 특수 문자를 찾아 앞에 백슬래시를 추가하여 이스케이프 하여 SQL Injection을 방지합니다.
+<br>
+
+### Prepared Statements
+<br>
+기존 logincheck.php 에서 쿼리를 처리하는 부분을 다음과같이 변경합니다.
+
+```php
+<?php
+
+... 중략 ...
+
+$query = "SELECT * FROM users WHERE id=? AND pw=?";
+
+$pst = $con->prepare($query);
+$pst->bind_param("ss", $id, $pw);
+$pst->execute();
+
+$result = $pst->get_result();
+
+if ($result->num_rows) {
+    $row = $result->fetch_assoc();
+    $_SESSION['id'] = $row['id'];
+    echo "<script>location.href='login2.php';</script>";
+
+... 중략 ...
+
+?>
+```
+
+`bind_param()` 을 사용하여 `$id`와 `$pw` 값을 바인딩하고, `execute()` 메서드를 호출하여 준비된 문을 실행합니다. 그 후 `get_result()` 를 사용하여 실행 결과를 얻습니다.
+
+`$result->num_rows`를 통해 결과 행의 수를 확인하고, `fetch_assoc()` 를 사용하여 결과 행을 연관 배열로 가져옵니다. 연관 배열에서 `$row['id']`를 사용하여 `$_SESSION['id']`에 값을 할당합니다.
+
+### 결과 
+
+입력값의 이스케이프방법과 Prepared Statements를 사용하는 방법 두가지 모두 `'`입력시 SQL Query 에 영향을 주지 않아 오류가 나지 않고 문자 그대로 입력값에 들어가 SQL Injection을 방어 할 수 있습니다. 
+<br>
+!['check](https://github.com/MLTree2/HK/blob/master/webH/image/SQL_Injection/login'.png)![result](https://github.com/MLTree2/HK/blob/master/webH/image/SQL_Injection/blind_error.png)
