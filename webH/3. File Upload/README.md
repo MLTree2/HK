@@ -43,7 +43,7 @@ if(isset($_GET['cmd'])){
 ![fileupload_apacheconf](https://github.com/MLTree2/HK/blob/master/webH/image/fileUpload/file_upload_apache2conf.png)
 
 Apache 설정파일인 apache2.conf 파일에서 파일이 업로드되는 경로의 Directory 설정에 `FilesMatch "\.*$"` 를 이용하여 모든 파일에 대하여 `SetHandler None`을 설정합니다. <br>
-`SetHandler None`을 설정하면 웹 서버는 어떤 핸들러도 사용하지 않습니다. 이는 일반적으로 정적인 파일을 서비스하는 데 사용됩니다. <br>
+`SetHandler None`을 설정하면 웹 서버는 어떤 핸들러도 사용하지 않습니다.
 즉, 요청된 파일을 그대로 반환하거나, 디렉토리 목록을 표시하지 않고 요청된 파일을 클라이언트에게 제공하여 파일이 웹서버에서 실행되지 않도록 합니다. 
 
 ![fileupload_a_result](https://github.com/MLTree2/HK/blob/master/webH/image/fileUpload/file_upload_a_result.png)
