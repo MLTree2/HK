@@ -57,7 +57,7 @@ Payload 4 에서 Length가 다른 하나를 확인 할 수 있습니다.
 
 **2. 데이터 베이스 이름 찾기**
 
-데이터 베이스의 이름을 찾기위해서는 `' or 1=1 and ascii(substring(database(), 1~4,1))= 65~128` 을 입력하여 알 수 있습니다. `1~4`와 `65~128`을 각각 넣어봐야 하는데 이를 위하여 위 방법과 동일하게 Burp Suite을 이용할 수 있고 python을 이용하여 자동화 툴을 만들 수 있습니다. 다음은 Blind_SQL_injection을 수행하는 blind_sql.py 코드의 일부 입니다.
+데이터 베이스의 이름을 찾기위해서는 `' or 1=1 and ascii(substring(database(), 1~4,1))= 65~128` 을 입력하여 알 수 있습니다. `1~4`와 `65~128`을 각각 넣어봐야 하는데 이를 위하여 위 방법과 동일하게 Burp Suite을 이용할 수 있고 python을 이용하여 자동화 툴을 만들 수 있습니다. 다음은 Blind_SQL_injection을 수행하는 [blind_sql.py](https://github.com/MLTree2/HK/blob/master/webH/1.%20SQL_Injection/blind_sql.py) 코드의 일부 입니다.
 
 ``` python
 def fun_2(len_db):
