@@ -13,7 +13,7 @@
 
 
 ### 기본 SQL_Injection 공격
-다음과 같이 id 입력란에 **'** 를 입력하여 SQL_Injection 공격에 취약한지 확인합니다.
+다음과 같이 id 입력란에 `**'**` 를 입력하여 SQL_Injection 공격에 취약한지 확인합니다.
 
 ![취약확인 사진](https://github.com/Tree1st/HK/blob/master/webH/image/SQL_Injection/login'.png)
 ![500](https://github.com/Tree1st/HK/blob/master/webH/image/SQL_Injection/500err.png)
