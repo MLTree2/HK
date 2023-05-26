@@ -336,7 +336,7 @@ if ($result->num_rows) {
 
 `bind_param()` 을 사용하여 `$id`와 `$pw` 값을 바인딩하고, `execute()` 메서드를 호출하여 준비된 문을 실행합니다. 그 후 `get_result()` 를 사용하여 실행 결과를 얻습니다.
 
-`$result->num_rows`를 통해 결과 행의 수를 확인하고, `fetch_assoc()` 를 사용하여 결과 행을 연관 배열로 가져옵니다. 연관 배열에서 `$row['id']`를 사용하여 `$_SESSION['id']`에 값을 할당합니다.
+`$result->num_rows`를 통해 결과 행의 수를 확인하고, `fetch_assoc()` 를 사용하여 결과 행을 배열로 가져옵니다. 배열에서 `$row['id']`를 사용하여 `$_SESSION['id']`에 값을 할당합니다.
 
 ### 결과 
 
