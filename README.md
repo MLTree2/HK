@@ -9,7 +9,7 @@
 - Apache 2.4.52
 - PHP 8.1.2
 # 모의해킹 웹 서버 파일
-## 파일 구성
+## [파일 구성](https://github.com/MLTree2/HK/tree/master/webH/0.%20%EC%9B%B9%EC%84%9C%EB%B2%84%20%EC%83%9D%EC%84%B1#%ED%8C%8C%EC%9D%BC-%EA%B5%AC%EC%84%B1)
 
 - board.php
 - changepw.php
