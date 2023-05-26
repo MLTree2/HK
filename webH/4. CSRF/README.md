@@ -34,4 +34,4 @@ CSRF(Cross-Site Request Forgery) 공격은 인증된 사용자의 권한을 사�
 ## 방어 실습
 ![csrf_b](https://github.com/MLTree2/HK/blob/master/webH/image/csrf/csrf_B.png)
 
-XSS 방어에서 사용된 [HTML Escaping](https://github.com/MLTree2/HK/tree/master/webH/2.%20XSS#html-%EC%9D%B4%EC%8A%A4%EC%BC%80%EC%9D%B4%ED%94%84)을 통하여 CSRF공격도 방어함을 볼 수 있다.
+XSS 방어에서 사용된 [HTML Escaping](https://github.com/MLTree2/HK/tree/master/webH/2.%20XSS#html-%EC%9D%B4%EC%8A%A4%EC%BC%80%EC%9D%B4%ED%94%84)을 통하여 CSRF공격도 방어함을 볼 수 있습니다.
