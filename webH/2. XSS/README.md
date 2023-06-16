@@ -77,5 +77,5 @@ $content = htmlspecialchars($rs->content);
 ```
 ![escape_result](https://github.com/MLTree2/HK/blob/master/webH/image/xss/escape_result.png)
 
-게시글에 XSS를 시도한 HTML 코드가 그대로 적혀있으며 HTML로 확인 시 **`<. >`** 문자열이 **`&lt; , &gt;`** 로 치환된것을 확인할 수 있습니다.
+게시글에 XSS를 시도한 HTML 코드가 그대로 적혀있으며 HTML로 확인 시 **`<,  >`** 문자열이 **`&lt; , &gt;`** 로 치환된것을 확인할 수 있습니다.
 
