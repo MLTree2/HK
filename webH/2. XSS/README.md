@@ -40,7 +40,7 @@
  ### 쿠키 탈취 방어
  ![php.ini](https://github.com/MLTree2/HK/blob/master/webH/image/xss/httponlyphpini.png)
  
- php.ini 파일의 `session.cookie_httponly = true' 설정을 통하여 쿠키의 속성에 HttpOnly 가 설정된다. HttpOnly 속성이 추가된 쿠키는 자바스크립트등과 같은 언어로 쿠키에 접근하는것을 차단하여 쿠키를 탈취하는것을 불가능하게 합니다.
+ php.ini 파일의 `session.cookie_httponly = true` 설정을 통하여 쿠키의 속성에 HttpOnly 가 설정된다. HttpOnly 속성이 추가된 쿠키는 자바스크립트등과 같은 언어로 쿠키에 접근하는것을 차단하여 쿠키를 탈취하는것을 불가능하게 합니다.
  
  ![editcookie](https://github.com/MLTree2/HK/blob/master/webH/image/xss/httponly_editcookie.png)
  
